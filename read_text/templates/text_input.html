@@ -1,0 +1,7 @@
+<h1>Input text to prepare learning section:</h1>
+
+<form action="{% url 'display' %}" method="post">
+{% csrf_token %}
+    <textarea cols="50" rows="4" name="input_text"></textarea>
+    <input type="submit" value="input" />
+</form>
