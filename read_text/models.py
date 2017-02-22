@@ -16,3 +16,10 @@ class Learnt(models.Model):
     id_word = models.ForeignKey(Word, on_delete=models.CASCADE)
     learnt = models.IntegerField(default=0)
     ok_rate = models.IntegerField(default=0)
+
+class Input_text(models.Model):
+    text = models.CharField(max_length=2000, default='')
+
+class Input_word(models.Model):
+    text_word = models.CharField(max_length=400, default='')
+

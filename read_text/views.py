@@ -1,6 +1,8 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-from read_text.models import Word
+from django.http import HttpResponseRedirect,HttpResponse
+from read_text.models import Word,Input_text,Input_word
+import string
+
 # Create your views here.
 
 #def index(request):
@@ -22,4 +24,24 @@ def display(request):
     return render(request,'template.tmpl',{'obj':Word.objects.all()})
 
 def text_input(request):
-    return render(request,'text_input.html')
+    return render(request,'text_input.html',{'text':Input_text.objects.all(),\
+            'word':Input_word.objects.all()})
+
+def submit_text(request):
+    try:
+        Input_text.objects.all().delete()
+        Input_word.objects.all().delete()
+        text = request.POST['input_text']
+    except KeyError as ErrorDetail:
+        text = "Try input text again. Error : ",ErrorDetail
+        it = Input_text(text=text)
+        it.save()
+        return render(request,'text_input.html',{'text':Input_text.objects.all(),\
+            'word':Input_word.objects.all()})
+    else:
+        it = Input_text(text=text)
+        it.save()
+        for wd in [word.strip(string.punctuation) for word in text.split()]:
+            iw = Input_word(text_word=wd)
+            iw.save()
+        return HttpResponseRedirect('/read_text/text_input/')

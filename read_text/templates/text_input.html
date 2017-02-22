@@ -1,7 +1,17 @@
 <h1>Input text to prepare learning section:</h1>
 
-<form action="{% url 'display' %}" method="post">
+<form action="{% url 'submit_text' %}" method="post">
 {% csrf_token %}
-    <textarea cols="50" rows="4" name="input_text"></textarea>
+    <textarea cols="100" rows="8" name="input_text"></textarea>
     <input type="submit" value="input" />
 </form>
+{% for t in text %}
+<h2>{{ t.text }}</h2>
+{% endfor %}
+<table>
+{% for w in word %}
+<tr>
+    <td>{{ w.text_word }}</td>
+</tr>
+{% endfor %}
+</table>
