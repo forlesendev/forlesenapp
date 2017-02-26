@@ -14,7 +14,7 @@ if os.path.isfile(fname):
     for line in f:
         if not line in ['\n','\r\n']:
             if not Word.objects.filter(word=line.replace("\n","")).exists():
-                wrd = Word(word=line)
+                wrd = Word(word=line.replace("\n",""))
                 wrd.save()
 #                print line.replace("\n","")
     f.close()
