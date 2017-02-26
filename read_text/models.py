@@ -23,3 +23,7 @@ class Input_text(models.Model):
 class Input_word(models.Model):
     text_word = models.CharField(max_length=400, default='')
 
+class Count_word(models.Model):
+#    id_word = models.ForeignKey(Word, on_delete=models.CASCADE)
+    word = models.CharField(max_length=200)
+    count = models.IntegerField(default=0)

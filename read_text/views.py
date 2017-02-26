@@ -1,8 +1,9 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render
 from django.http import HttpResponseRedirect,HttpResponse
-from read_text.models import Word,Input_text,Input_word
+from read_text.models import Word,Input_text,Input_word,Count_word
 import string
-
+from collections import defaultdict
 # Create your views here.
 
 #def index(request):
@@ -25,8 +26,20 @@ def display(request):
     return render(request,'template.tmpl',{'obj':Word.objects.all()})
 
 def text_input(request):
+    count_word()
     return render(request,'text_input.html',{'text':Input_text.objects.all(),\
-            'word':Input_word.objects.all()})
+            'word':Count_word.objects.exclude(count=0).order_by('-count')})
+
+def count_word():
+    Count_word.objects.all().delete()
+    word_dict = defaultdict(int)
+    for w in Input_word.objects.values():
+       word_dict[w['text_word']] += 1
+    for word in word_dict:
+        if Word.objects.filter(word=word).exists():
+            wrd = Count_word(word=word,count=word_dict[word])
+            wrd.save()
+    return
 
 def submit_text(request):
     try:
