@@ -16,7 +16,8 @@ def display(request):
     'nennen','moegen','zeigen','fuehren','sprechen','sprechen',\
     'bringen','leben','fahren','meinen','fragen','kennen',\
     'gelten','stellen','spielen','arbeiten','brauchen','folgen',\
-    'lernen','bestehen','verstehen','setzen','bekommen','beginnen']
+    'lernen','bestehen','verstehen','setzen','bekommen','beginnen',\
+    'Übertretung']
     for wrd_word_i in range(len(wrd_word)):
         if not Word.objects.filter(word=wrd_word[wrd_word_i]).exists():
             wrd = Word(word=wrd_word[wrd_word_i])
